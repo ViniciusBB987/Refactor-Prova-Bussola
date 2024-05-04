@@ -1,0 +1,24 @@
+8 - [1.5 Pontos] Descreva com suas palavras o que é o loop de eventos no contexto do Node.js. Explique como ele funciona para permitir operações assíncronas não bloqueantes, mencionando os tipos de tarefas que são processadas em cada fase do loop de eventos. Como o loop de eventos se relaciona com a eficiência do Node.js em lidar com I/O assíncrono?
+
+Resposta: O loop de eventos é um dos conceitos fundamentais que faz o Node.js um ambiente poderoso e eficiente para construir aplicações web escalaveis. O ciclo de uma aplicação Node.js de forma simples é: Ela começa inicializando o código necessário para executar, o motor V8 do Node.js executa o script JavaScript, após a execução do script, o Node.js entra no loop de eventos, que é responsavel por ouvir eventos e despachá-los quando eles ocorrem. 
+Agora as fases dele são:
+1-Timers: Callbacks de setTimeout() e setInterval() são executados.
+2-I/O Callbacks: As Callbacks de operações de I/O, como as operações de rede, leitura de arquivos, etc...
+3-Poll: Onde o Node.js verifica se novos eventos de I/O estão prontos para serem processados
+4-Check: Onde o setImmediate() callbacks são exeutados
+5-Close Callbacks: Onde callbacks como socket.on('close', ...) são chamados
+O loop de eventos se relaciona com a eficiência do Node.js em lidar com I/O assíncrono da seguinte forma, quando uma operação assíncrona é iniciada, ela é enviada para ser processada fora da thread principal do Node.js. Um callback é registrado para essa operação. Quando a operação é concluida, o callback é colocado na fila do loop de eventos para ser executado assim que possível.
+
+9 - [1.5 Pontos] Explique com suas palavras o papel da engine V8 e da biblioteca libuv no funcionamento do Node.js. Como cada uma dessas componentes contribui para a execução de código JavaScript e operações de I/O assíncronas, respectivamente? Discuta como a interação entre V8 e libuv permite que o Node.js ofereça um desempenho eficiente para aplicações web.
+
+O Node.js é construído sobre duas peças principais: o motor JavaScript V8 e a biblioteca libuv.
+
+Motor JavaScript V8:
+O V8 é um motor de JavaScript de código aberto desenvolvido pela Google. Ele é escrito em C++ e é conhecido por sua rápida execução de código JavaScript.
+O Node.js usa o V8 como seu interpretador JavaScript. Quando você executa um arquivo JavaScript no Node.js, o código é passado para o V8 para execução.
+O V8 compila o JavaScript em código de máquina nativo antes de executá-lo, o que melhora significativamente o desempenho em comparação com a interpretação pura do código.
+Biblioteca libuv:
+A libuv é uma biblioteca multiplataforma de E/S (entrada/saída) assíncrona, desenvolvida principalmente por membros da comunidade Node.js. Ela fornece uma API para operações de E/S assíncronas e gerenciamento de eventos de forma eficiente.
+Uma das características principais da libuv é o suporte a operações de E/S assíncronas e não bloqueantes. Isso permite que o Node.js lide com muitas conexões simultâneas sem bloquear a execução do código.
+A libuv também é responsável por fornecer a infraestrutura para o modelo de evento e loop de eventos do Node.js, que é fundamental para o seu estilo de programação assíncrona.
+Em resumo, o Node.js combina o motor V8 para executar JavaScript com a biblioteca libuv para fornecer um ambiente de execução assíncrono e eficiente, tornando-o ideal para desenvolvimento de aplicativos de rede escaláveis e de alto desempenho.
